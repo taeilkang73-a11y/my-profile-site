@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김태일 - 풀스택 개발자</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-border {
+            position: relative;
+            border: 2px solid transparent;
+            background: linear-gradient(#1a1a2e, #1a1a2e) padding-box,
+                        linear-gradient(135deg, #7c3aed, #2563eb) border-box;
+        }
+
+        .typing-cursor {
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            left: 0;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .skill-badge {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(37, 99, 235, 0.1));
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            border-color: rgba(167, 139, 250, 0.6);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2));
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.8));
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .project-card:hover {
+            border-color: rgba(167, 139, 250, 0.5);
+        }
+
+        .hero-section {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        nav.scrolled {
+            background-color: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">KT</div>
+            <div class="hidden md:flex gap-8">
+                <a href="#home" class="nav-link text-slate-300 hover:text-white transition">Home</a>
+                <a href="#about" class="nav-link text-slate-300 hover:text-white transition">About</a>
+                <a href="#skills" class="nav-link text-slate-300 hover:text-white transition">Skills</a>
+                <a href="#projects" class="nav-link text-slate-300 hover:text-white transition">Projects</a>
+                <a href="#contact" class="nav-link text-slate-300 hover:text-white transition">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 top-16 z-40 bg-black bg-opacity-50 md:hidden">
+        <div class="bg-gradient-to-b from-slate-900 to-slate-800 flex flex-col gap-4 p-6">
+            <a href="#home" class="text-white hover:text-purple-400 transition">Home</a>
+            <a href="#about" class="text-white hover:text-purple-400 transition">About</a>
+            <a href="#skills" class="text-white hover:text-purple-400 transition">Skills</a>
+            <a href="#projects" class="text-white hover:text-purple-400 transition">Projects</a>
+            <a href="#contact" class="text-white hover:text-purple-400 transition">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-4 hero-section">
+        <div class="text-center max-w-3xl mx-auto">
+            <div class="mb-6">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kim" alt="Avatar" class="w-24 h-24 rounded-full mx-auto border-2 border-purple-500 shadow-lg">
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="gradient-text">김태일</span>
+            </h1>
+            <h2 class="text-2xl md:text-3xl text-slate-300 mb-6">풀스택 개발자</h2>
+
+            <p class="text-lg text-slate-400 mb-8">
+                <span id="typing-text"></span><span class="typing-cursor">|</span>
+            </p>
+
+            <div class="flex gap-4 justify-center mb-12">
+                <a href="#projects" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition transform hover:scale-105">
+                    My Work
+                </a>
+                <a href="#contact" class="px-8 py-3 border-2 border-purple-500 text-purple-400 rounded-lg font-semibold hover:bg-purple-500 hover:text-white transition">
+                    Contact Me
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-6 text-slate-400">
+                <a href="https://github.com" target="_blank" class="hover:text-purple-400 transition transform hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                </a>
+                <a href="mailto:taeil.kang73@gmail.com" class="hover:text-purple-400 transition transform hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">About Me</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=500&fit=crop" alt="About" class="rounded-lg shadow-lg">
+                </div>
+                <div class="fade-in-on-scroll">
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        사용자 경험을 중심으로 생각하는 풀스택 개발자입니다. 클린 코드와 모던 웹 기술을 통해 가치 있는 제품을 만듭니다.
+                    </p>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        현재 React와 Node.js 기반의 웹 애플리케이션 개발에 집중하고 있습니다. 문제를 해결하는 과정에서 배우고, 팀과의 협업을 중요하게 생각합니다.
+                    </p>
+                    <p class="text-lg text-slate-300 leading-relaxed">
+                        새로운 기술을 학습하고 실험하는 것을 즐기며, 지속적인 성장을 추구하고 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 bg-gradient-to-b from-transparent via-purple-900 via-opacity-10 to-transparent">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Technical Skills</span>
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">📱</div>
+                    <p class="font-semibold">HTML</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">🎨</div>
+                    <p class="font-semibold">CSS</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">⚡</div>
+                    <p class="font-semibold">JavaScript</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">⚛️</div>
+                    <p class="font-semibold">React</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">🟢</div>
+                    <p class="font-semibold">Node.js</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">📘</div>
+                    <p class="font-semibold">TypeScript</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">🔗</div>
+                    <p class="font-semibold">Git</p>
+                </div>
+                <div class="skill-badge fade-in-on-scroll p-4 rounded-lg text-center">
+                    <div class="text-3xl mb-2">🌪️</div>
+                    <p class="font-semibold">Tailwind CSS</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Featured Projects</span>
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card card-hover fade-in-on-scroll p-6 rounded-lg">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl">📋</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">TaskFlow</h3>
+                    <p class="text-slate-400 mb-4">React와 Node.js로 만든 실시간 협업 태스크 매니저. 팀원과 함께 프로젝트를 관리하고 진행상황을 추적할 수 있습니다.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-purple-600 text-white text-sm rounded-full">React</span>
+                        <span class="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">Node.js</span>
+                        <span class="px-3 py-1 bg-green-600 text-white text-sm rounded-full">MongoDB</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://github.com" target="_blank" class="text-purple-400 hover:text-purple-300 transition">GitHub →</a>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 transition">Demo →</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card card-hover fade-in-on-scroll p-6 rounded-lg">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl">🌤️</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">WeatherNow</h3>
+                    <p class="text-slate-400 mb-4">OpenWeatherAPI를 활용한 날씨 대시보드 앱. 실시간 날씨 정보, 예보, 심화 통계를 한눈에 볼 수 있습니다.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-purple-600 text-white text-sm rounded-full">React</span>
+                        <span class="px-3 py-1 bg-yellow-600 text-white text-sm rounded-full">API</span>
+                        <span class="px-3 py-1 bg-pink-600 text-white text-sm rounded-full">Tailwind</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://github.com" target="_blank" class="text-purple-400 hover:text-purple-300 transition">GitHub →</a>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 transition">Demo →</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card card-hover fade-in-on-scroll p-6 rounded-lg">
+                    <div class="h-48 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-5xl">📝</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">DevBlog</h3>
+                    <p class="text-slate-400 mb-4">Next.js와 MDX 기반 개발자 블로그 플랫폼. 기술 글, 튜토리얼, 개발 일지를 공유합니다.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-purple-600 text-white text-sm rounded-full">Next.js</span>
+                        <span class="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">MDX</span>
+                        <span class="px-3 py-1 bg-indigo-600 text-white text-sm rounded-full">Vercel</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://github.com" target="_blank" class="text-purple-400 hover:text-purple-300 transition">GitHub →</a>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 transition">Demo →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-gradient-to-b from-transparent via-purple-900 via-opacity-10 to-transparent">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Get In Touch</span>
+            </h2>
+
+            <div class="flex justify-center gap-8 mb-12">
+                <a href="mailto:taeil.kang73@gmail.com" class="gradient-border p-6 rounded-lg hover:scale-105 transition transform">
+                    <div class="text-3xl mb-2">✉️</div>
+                    <p class="text-sm text-slate-400">Email</p>
+                    <p class="text-white font-semibold">taeil.kang73@gmail.com</p>
+                </a>
+                <a href="https://github.com" target="_blank" class="gradient-border p-6 rounded-lg hover:scale-105 transition transform">
+                    <div class="text-3xl mb-2">🔗</div>
+                    <p class="text-sm text-slate-400">GitHub</p>
+                    <p class="text-white font-semibold">github.com/taeil</p>
+                </a>
+            </div>
+
+            <form id="contact-form" class="space-y-6">
+                <div>
+                    <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-slate-800 rounded-lg border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition" required>
+                </div>
+                <div>
+                    <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-slate-800 rounded-lg border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition" required>
+                </div>
+                <div>
+                    <textarea placeholder="Your Message" rows="5" class="w-full px-4 py-3 bg-slate-800 rounded-lg border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition resize-none" required></textarea>
+                </div>
+                <button type="submit" class="w-full px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition transform hover:scale-105">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 px-4 text-center text-slate-500">
+        <p>&copy; 2024 김태일. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Typing Animation
+        const typingText = document.getElementById('typing-text');
+        const text = "사용자 경험을 중심으로 생각하는 개발자입니다.";
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                typingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeText, 50);
+            }
+        }
+
+        typeText();
+
+        // Navigation Scroll Effect
+        const nav = document.querySelector('nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            // Update active nav link
+            navLinks.forEach(link => {
+                const sectionId = link.getAttribute('href').substring(1);
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Fade In on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Contact Form
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('메시지가 전송되었습니다! 감사합니다.');
+            document.getElementById('contact-form').reset();
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

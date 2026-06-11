@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카운터 앱</title>
+    <!-- Tailwind CSS를 CDN에서 불러옵니다 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- 전체 화면을 중앙에 정렬하는 컨테이너 -->
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <!-- 카운터 앱 박스 -->
+        <div class="bg-white rounded-lg shadow-lg p-8 w-80">
+            <!-- 제목 -->
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">
+                카운터
+            </h1>
+
+            <!-- 카운트 숫자를 표시하는 부분 -->
+            <div class="bg-blue-50 rounded-lg p-8 mb-8 border-2 border-blue-200">
+                <p class="text-center text-gray-600 text-sm mb-2">현재 카운트</p>
+                <p id="counter" class="text-center text-6xl font-bold text-blue-600">
+                    0
+                </p>
+            </div>
+
+            <!-- 버튼들을 감싸는 컨테이너 -->
+            <div class="space-y-3">
+                <!-- 증가 버튼 -->
+                <button
+                    onclick="increaseCounter()"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105"
+                >
+                    +1 증가
+                </button>
+
+                <!-- 감소 버튼 -->
+                <button
+                    onclick="decreaseCounter()"
+                    class="w-full bg-blue-400 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105"
+                >
+                    -1 감소
+                </button>
+
+                <!-- 리셋 버튼 -->
+                <button
+                    onclick="resetCounter()"
+                    class="w-full bg-blue-300 hover:bg-blue-400 text-white font-bold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105"
+                >
+                    초기화
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 카운트 값을 저장하는 변수 (처음에는 0)
+        let count = 0;
+
+        // 화면에 표시된 카운트를 업데이트하는 함수
+        function updateDisplay() {
+            // id가 "counter"인 요소를 찾아서 현재 count 값을 표시합니다
+            document.getElementById('counter').textContent = count;
+        }
+
+        // 카운트를 1 증가시키는 함수
+        function increaseCounter() {
+            count = count + 1;  // count를 1 더합니다
+            updateDisplay();    // 화면을 업데이트합니다
+        }
+
+        // 카운트를 1 감소시키는 함수
+        function decreaseCounter() {
+            count = count - 1;  // count를 1 뺍니다
+            updateDisplay();    // 화면을 업데이트합니다
+        }
+
+        // 카운트를 0으로 초기화하는 함수
+        function resetCounter() {
+            count = 0;          // count를 0으로 설정합니다
+            updateDisplay();    // 화면을 업데이트합니다
+        }
+    </script>
+</body>
+</html>
